@@ -1,0 +1,22 @@
+chaos_league/
+│
+├── main.py                 # Entry point
+├── config.py               # All tunings live here
+├── engine/
+│   ├── match.py            # Match execution
+│   ├── judge.py            # Scoring + deception logic
+│   ├── rng.py              # Seed handling
+│   ├── sandbox.py          # Bot isolation
+│   └── logger.py           # Data capture
+│
+├── bots/
+│   ├── bot_alpha.py
+│   ├── bot_beta.py
+│   └── ...
+│
+├── results/
+│   ├── raw/
+│   ├── summaries/
+│   └── metadata/
+│
+└── README.md
