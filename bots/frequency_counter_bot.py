@@ -32,6 +32,13 @@ class Bot:
             if most_common in beats
         ]
 
+        if not counters:
+            # Fallback to a default move if no counter is found
+            return {
+                "real_move": Move.ROCK,
+                "shadow": False,
+            }
+
         chosen = counters[0]  # deterministic choice
 
         return {

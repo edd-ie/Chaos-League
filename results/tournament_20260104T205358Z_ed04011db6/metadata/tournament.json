@@ -1,0 +1,106 @@
+{
+  "timestamp_utc": "20260104T205358Z",
+  "engine_version": "0.1.2",
+  "config": {
+    "ROUNDS": 10000,
+    "DECEPTION_TOKENS": 50,
+    "SHADOW_REJECT_PROB": 0.1,
+    "SEED_SALT": "CHAOS_LEAGUE_2026"
+  },
+  "config_fingerprint": "ed04011db6",
+  "final_tournament_stats": {
+    "chaos_test_bot": {
+      "score": 672,
+      "matches": 6,
+      "wins": 6,
+      "losses": 0,
+      "draws": 0,
+      "shadow_used": 0,
+      "shadow_efficiency": 0.0
+    },
+    "frequency_counter_bot": {
+      "score": -354,
+      "matches": 6,
+      "wins": 0,
+      "losses": 6,
+      "draws": 0,
+      "shadow_used": 0,
+      "shadow_efficiency": 0.0
+    },
+    "reference_bot": {
+      "score": -318,
+      "matches": 6,
+      "wins": 3,
+      "losses": 3,
+      "draws": 0,
+      "shadow_used": 0,
+      "shadow_efficiency": 0.0
+    }
+  },
+  "rng_seeds": [
+    {
+      "bot_a": "chaos_test_bot",
+      "bot_b": "frequency_counter_bot",
+      "rng_seed_a": "chaos_test_bot_frequency_counter_bot_1_A_CHAOS_LEAGUE_2026",
+      "rng_seed_b": "frequency_counter_bot_chaos_test_bot_1_B_CHAOS_LEAGUE_2026",
+      "match_index": 1
+    },
+    {
+      "bot_a": "chaos_test_bot",
+      "bot_b": "frequency_counter_bot",
+      "rng_seed_a": "chaos_test_bot_frequency_counter_bot_2_A_CHAOS_LEAGUE_2026",
+      "rng_seed_b": "frequency_counter_bot_chaos_test_bot_2_B_CHAOS_LEAGUE_2026",
+      "match_index": 2
+    },
+    {
+      "bot_a": "chaos_test_bot",
+      "bot_b": "frequency_counter_bot",
+      "rng_seed_a": "chaos_test_bot_frequency_counter_bot_3_A_CHAOS_LEAGUE_2026",
+      "rng_seed_b": "frequency_counter_bot_chaos_test_bot_3_B_CHAOS_LEAGUE_2026",
+      "match_index": 3
+    },
+    {
+      "bot_a": "chaos_test_bot",
+      "bot_b": "reference_bot",
+      "rng_seed_a": "chaos_test_bot_reference_bot_1_A_CHAOS_LEAGUE_2026",
+      "rng_seed_b": "reference_bot_chaos_test_bot_1_B_CHAOS_LEAGUE_2026",
+      "match_index": 1
+    },
+    {
+      "bot_a": "chaos_test_bot",
+      "bot_b": "reference_bot",
+      "rng_seed_a": "chaos_test_bot_reference_bot_2_A_CHAOS_LEAGUE_2026",
+      "rng_seed_b": "reference_bot_chaos_test_bot_2_B_CHAOS_LEAGUE_2026",
+      "match_index": 2
+    },
+    {
+      "bot_a": "chaos_test_bot",
+      "bot_b": "reference_bot",
+      "rng_seed_a": "chaos_test_bot_reference_bot_3_A_CHAOS_LEAGUE_2026",
+      "rng_seed_b": "reference_bot_chaos_test_bot_3_B_CHAOS_LEAGUE_2026",
+      "match_index": 3
+    },
+    {
+      "bot_a": "frequency_counter_bot",
+      "bot_b": "reference_bot",
+      "rng_seed_a": "frequency_counter_bot_reference_bot_1_A_CHAOS_LEAGUE_2026",
+      "rng_seed_b": "reference_bot_frequency_counter_bot_1_B_CHAOS_LEAGUE_2026",
+      "match_index": 1
+    },
+    {
+      "bot_a": "frequency_counter_bot",
+      "bot_b": "reference_bot",
+      "rng_seed_a": "frequency_counter_bot_reference_bot_2_A_CHAOS_LEAGUE_2026",
+      "rng_seed_b": "reference_bot_frequency_counter_bot_2_B_CHAOS_LEAGUE_2026",
+      "match_index": 2
+    },
+    {
+      "bot_a": "frequency_counter_bot",
+      "bot_b": "reference_bot",
+      "rng_seed_a": "frequency_counter_bot_reference_bot_3_A_CHAOS_LEAGUE_2026",
+      "rng_seed_b": "reference_bot_frequency_counter_bot_3_B_CHAOS_LEAGUE_2026",
+      "match_index": 3
+    }
+  ],
+  "matches_per_pair": 3
+}

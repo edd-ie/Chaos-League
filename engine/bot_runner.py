@@ -1,52 +1,33 @@
-import multiprocessing
+import time
 from engine.judge import MOVES
 
-DEFAULT_MOVE = MOVES[0]  # fallback if bot times out or crashes
-TIMEOUT_SECONDS = 0.05   # 50ms per move
+DEFAULT_MOVE = MOVES[0]
+TIMEOUT_SECONDS = 0.05
 
-def safe_play(bot_class, state, rng):
-    """
-    Runs bot.play() with a timeout in a subprocess.
-    Returns a dict with 'real_move' and optional 'shadow'.
-    """
-    def target(queue):
-        try:
-            result = bot_class.play(state, rng)
-            queue.put(result)
-        except Exception as e:
-            queue.put({"real_move": DEFAULT_MOVE})
 
-    queue = multiprocessing.Queue()
-    p = multiprocessing.Process(target=target, args=(queue,))
-    p.start()
-    p.join(TIMEOUT_SECONDS)
-    if p.is_alive():
-        p.terminate()
+def safe_play(bot, state, rng):
+    start = time.perf_counter()
+    try:
+        result = bot.play(state, rng)
+    except Exception:
         return {"real_move": DEFAULT_MOVE}
-    if queue.empty():
+
+    elapsed = time.perf_counter() - start
+    if elapsed > TIMEOUT_SECONDS:
         return {"real_move": DEFAULT_MOVE}
-    return queue.get()
+
+    return result
 
 
-def safe_shadow(bot_class, state):
-    """
-    Runs bot.request_shadow_move() with a timeout.
-    Returns (False, None) if timeout occurs.
-    """
-    def target(queue):
-        try:
-            result = bot_class.request_shadow_move(state)
-            queue.put(result)
-        except Exception:
-            queue.put((False, None))
-
-    queue = multiprocessing.Queue()
-    p = multiprocessing.Process(target=target, args=(queue,))
-    p.start()
-    p.join(TIMEOUT_SECONDS)
-    if p.is_alive():
-        p.terminate()
+def safe_shadow(bot, state):
+    start = time.perf_counter()
+    try:
+        result = bot.request_shadow_move(state)
+    except Exception:
         return False, None
-    if queue.empty():
+
+    elapsed = time.perf_counter() - start
+    if elapsed > TIMEOUT_SECONDS:
         return False, None
-    return queue.get()
+
+    return result

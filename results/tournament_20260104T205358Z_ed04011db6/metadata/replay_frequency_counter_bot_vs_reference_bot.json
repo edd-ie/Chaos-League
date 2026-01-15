@@ -1,0 +1,11 @@
+{
+  "bot_a": "frequency_counter_bot",
+  "bot_b": "reference_bot",
+  "score_a": -5,
+  "score_b": 5,
+  "tokens_used_a": 0,
+  "tokens_used_b": 0,
+  "shadow_efficiency_a": 0.0,
+  "shadow_efficiency_b": 0.0,
+  "rounds_log": "results\\tournament_20260104T205358Z_ed04011db6\\raw\\rounds.jsonl"
+}

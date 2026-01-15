@@ -12,7 +12,7 @@ class Bot:
         # Random real move (legal RNG)
         real_move = rng.choice(list(Move))
 
-        # Attempt shadow only when opponent is "LOW" or worse
+        # Attempt shadow only when the opponent is "LOW" or worse
         use_shadow = (
             state["opponent_deception_bucket"] in {"LOW", "EMPTY"}
             and rng.random() < 0.3

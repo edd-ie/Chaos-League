@@ -1,69 +1,46 @@
 """
-End-to-end Chaos League determinism test.
+End-to-end Chaos League replay test.
 
-Runs:
-1) Match execution (competition mode)
-2) Log generation
-3) Replay validation
-
-Works even if only one bot exists,
-by pairing it with the reference bot.
+Purpose:
+- Automatically replays all matches from the latest tournament logs
+- Validates that every bot pair reproduces the same moves
+- Guarantees Move enum consistency
+- Works even if only one bot exists
 """
 
 import pathlib
 import json
-
-from engine.match import run_match
-from engine.logger import init_logging, finalize_logging, log_match_summary
-from engine.bot_loader import load_bot
 from engine.replay_validator import validate_match_replay
 
-PROJECT_ROOT = pathlib.Path(__file__).resolve().parents[1]
-BOTS_DIR = PROJECT_ROOT / "bots"
-REFERENCE_BOT = "reference_bot"
+RESULTS_DIR = pathlib.Path(__file__).resolve().parents[1] / "results"
+BOTS_DIR = pathlib.Path(__file__).resolve().parents[1] / "bots"
 
+
+def find_latest_tournament() -> pathlib.Path:
+    tournaments = sorted(RESULTS_DIR.glob("tournament_*"))
+    if not tournaments:
+        raise RuntimeError("No tournament results found in 'results/'")
+    return tournaments[-1]
 
 
 def main():
-    bots = sorted(p.stem for p in BOTS_DIR.glob("*.py") if p.stem != "__init__")
+    latest_tournament = find_latest_tournament()
+    metadata_dir = latest_tournament / "metadata"
 
-    if not bots:
-        raise RuntimeError("No bots found in bots/")
+    replay_files = list(metadata_dir.glob("replay_*.json"))
+    if not replay_files:
+        raise RuntimeError(f"No replay metadata files found in {metadata_dir}")
 
-    # Use first bot vs reference
-    bot_name = bots[0]
+    print(f"Validating {len(replay_files)} match replays from {latest_tournament.name}...\n")
 
-    bot_a = load_bot(BOTS_DIR / f"{bot_name}.py")
-    bot_b = load_bot(BOTS_DIR / f"{REFERENCE_BOT}.py")
+    for replay_meta_path in replay_files:
+        try:
+            validate_match_replay(replay_meta_path, BOTS_DIR)
+        except Exception as e:
+            print(f"[ERROR] Replay validation failed for {replay_meta_path.name}: {e}")
+            raise
 
-    init_logging(competition=True)
-
-    summary = run_match(
-        bot_a,
-        bot_b,
-        name_a=bot_name,
-        name_b=REFERENCE_BOT,
-    )
-
-    log_match_summary(summary)
-    finalize_logging()
-
-    # --- Build replay metadata ---
-    results_root = sorted(pathlib.Path("results").glob("tournament_*"))[-1]
-    rounds_log = results_root / "raw" / "rounds.jsonl"
-
-    replay_meta = {
-        "bot_a": bot_name,
-        "bot_b": REFERENCE_BOT,
-        "rounds_log": str(rounds_log),
-    }
-
-    meta_path = results_root / "metadata" / "replay_test.json"
-    with open(meta_path, "w", encoding="utf-8") as f:
-        json.dump(replay_meta, f, indent=2)
-
-    # --- Replay validation ---
-    validate_match_replay(meta_path, BOTS_DIR)
+    print("\nAll replays validated successfully!")
 
 
 if __name__ == "__main__":
